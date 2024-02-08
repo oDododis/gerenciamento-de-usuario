@@ -3,37 +3,106 @@ package main
 import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"log"
 )
 
-type Product struct {
+type Users struct {
 	gorm.Model
-	Code  string
-	Price uint
+	FullName string
+	Email    string
+	Username string
+	Password string
 }
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	user1 := Users{
+		FullName: "Douuglas Barbosa",
+		Email:    "douglas@barbosa.com",
+		Username: "dododis",
+		Password: "12345",
+	}
+	user2 := Users{
+		FullName: "Douuglas Monteiro",
+		Email:    "douglas@moteiro.com",
+		Username: "dodosubi",
+		Password: "54321",
+	}
+
+	user3 := Users{
+		FullName: "Pão de Batata",
+		Email:    "pao@batata.com",
+		Username: "paodebatata",
+		Password: "p1203798!@$#)(*",
+	}
+	user4 := Users{
+		FullName: "APSOJDPOASD",
+		Email:    "pao@batata.com",
+		Username: "APKSDJLKASJD",
+		Password: "ASD{PLA`PSDKÀS$#)(*",
+	}
+	user5 := Users{}
+	user6 := Users{Email: "ASPIDJ"}
+	user7 := Users{Email: "asd"}
+	createUser(user1)
+	createUser(user2)
+	createUser(user3)
+	createUser(user4)
+	createUser(user5)
+	createUser(user6)
+	createUser(user7)
+
+	updateInfo(4, user4)
+
+	deleteUser(5)
+	excludeUser(6)
+}
+
+func createUser(user Users) {
+	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.AutoMigrate(&Users{})
 
-	// Migrate the schema
-	db.AutoMigrate(&Product{})
+	err = db.First(&user, "email = ?", user.Email).Error // db.First(&user, "username = ?", user.Username).Error
+	if err != nil {
+		log.Println("Não tem Email.")
+		db.Create(&user)
+	} else {
+		log.Println("Já tem Email.")
+	}
+}
 
-	// Create
-	db.Create(&Product{Code: "D42", Price: 100})
+func updateInfo(ID int, user Users) {
+	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.AutoMigrate(&Users{})
+	var lastUser Users
+	db.First(&lastUser, ID)
+	db.Model(&lastUser).Updates(&user)
+	log.Println("Update concluido.")
+}
 
-	// Read
-	var product Product
-	db.First(&product, 1)                 // find product with integer primary key
-	db.First(&product, "code = ?", "D42") // find product with code D42
+func deleteUser(ID int) {
+	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.AutoMigrate(&Users{})
 
-	// Update - update product's price to 200
-	db.Model(&product).Update("Price", 200)
-	// Update - update multiple fields
-	db.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // non-zero fields
-	db.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
+	var user Users
+	db.Delete(&user, ID)
+}
 
-	// Delete - delete product
-	db.Delete(&product, 1)
+// Excluir da lista por completo
+func excludeUser(ID int) {
+	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.AutoMigrate(&Users{})
+	log.Println(ID)
+	db.Exec("delete from users where ID = ?", ID)
 }
