@@ -62,7 +62,11 @@ func createUser(user Users) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&Users{})
+
+	err = db.AutoMigrate(&Users{})
+	if err != nil {
+		return
+	}
 
 	err = db.First(&user, "email = ?", user.Email).Error // db.First(&user, "username = ?", user.Username).Error
 	if err != nil {
@@ -78,7 +82,10 @@ func updateInfo(ID int, user Users) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&Users{})
+	err = db.AutoMigrate(&Users{})
+	if err != nil {
+		return
+	}
 	var lastUser Users
 	db.First(&lastUser, ID)
 	db.Model(&lastUser).Updates(&user)
@@ -90,7 +97,10 @@ func deleteUser(ID int) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&Users{})
+	err = db.AutoMigrate(&Users{})
+	if err != nil {
+		return
+	}
 
 	var user Users
 	db.Delete(&user, ID)
@@ -102,7 +112,10 @@ func excludeUser(ID int) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&Users{})
+	err = db.AutoMigrate(&Users{})
+	if err != nil {
+		return
+	}
 	log.Println(ID)
-	db.Exec("delete from users where ID = ?", ID)
+	db.Exec("DELETE FROM users WHERE ID = ?", ID)
 }
