@@ -16,13 +16,13 @@ type Users struct {
 
 func main() {
 	user1 := Users{
-		FullName: "Douuglas Barbosa",
+		FullName: "Douglas Barbosa",
 		Email:    "douglas@barbosa.com",
 		Username: "dododis",
 		Password: "12345",
 	}
 	user2 := Users{
-		FullName: "Douuglas Monteiro",
+		FullName: "Douglas Monteiro",
 		Email:    "douglas@moteiro.com",
 		Username: "dodosubi",
 		Password: "54321",
