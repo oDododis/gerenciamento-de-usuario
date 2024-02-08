@@ -1,6 +1,8 @@
 package main
 
 import (
+	"Teste/src/controller/routes"
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
@@ -15,46 +17,13 @@ type Users struct {
 }
 
 func main() {
-	user1 := Users{
-		FullName: "Douglas Barbosa",
-		Email:    "douglas@barbosa.com",
-		Username: "dododis",
-		Password: "12345",
-	}
-	user2 := Users{
-		FullName: "Douglas Monteiro",
-		Email:    "douglas@moteiro.com",
-		Username: "dodosubi",
-		Password: "54321",
-	}
+	router := gin.Default()
 
-	user3 := Users{
-		FullName: "Pão de Batata",
-		Email:    "pao@batata.com",
-		Username: "paodebatata",
-		Password: "p1203798!@$#)(*",
-	}
-	user4 := Users{
-		FullName: "APSOJDPOASD",
-		Email:    "pao@batata.com",
-		Username: "APKSDJLKASJD",
-		Password: "ASD{PLA`PSDKÀS$#)(*",
-	}
-	user5 := Users{}
-	user6 := Users{Email: "ASPIDJ"}
-	user7 := Users{Email: "asd"}
-	createUser(user1)
-	createUser(user2)
-	createUser(user3)
-	createUser(user4)
-	createUser(user5)
-	createUser(user6)
-	createUser(user7)
+	routes.InitRoutes(&router.RouterGroup)
 
-	updateInfo(4, user4)
-
-	deleteUser(5)
-	excludeUser(6)
+	if err := router.Run(":8080"); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func createUser(user Users) {
