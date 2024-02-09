@@ -1,9 +1,13 @@
 package routes
 
+// Rotas da Aplicação
+
 import (
 	"Teste/src/controller"
 	"github.com/gin-gonic/gin"
 )
+
+// Iniciando as Rotas
 
 func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
 

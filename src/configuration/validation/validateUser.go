@@ -32,7 +32,7 @@ func ValidateUserError(validation_err error) *rest_error.RestError {
 	var jsonValidationError validator.ValidationErrors
 
 	if errors.As(validation_err, &jsonErr) {
-		return rest_error.NewBadRequestError("giTipo de campo invalido")
+		return rest_error.NewBadRequestError("Tipo de campo invalido")
 	} else if errors.As(validation_err, &jsonValidationError) {
 		errorsCauses := []rest_error.Causes{}
 

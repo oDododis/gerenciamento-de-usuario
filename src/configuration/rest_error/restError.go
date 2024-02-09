@@ -1,6 +1,10 @@
 package rest_error
 
+//Criação de alguns erros padronizados
+
 import "net/http"
+
+// Mensagem, tipo, e codico do erro
 
 type RestError struct {
 	Message string   `json:"message"`
@@ -9,14 +13,19 @@ type RestError struct {
 	Causes  []Causes `json:"causes"`
 }
 
+//Causas do erro
+
 type Causes struct {
 	Field   string `json:"fild"`
 	Message string `json:"message"`
 }
 
+// Função para o RestError seja considerado como um erro
 func (r *RestError) Error() string {
 	return r.Message
 }
+
+//Funcões de tipos de erros
 
 func NewRestError(message string, err string, code int, causes []Causes) *RestError {
 	return &RestError{
