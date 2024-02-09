@@ -4,11 +4,12 @@ import (
 	"Teste/src/configuration/validation"
 	"Teste/src/controller/model/request"
 	"Teste/src/model"
-	"Teste/src/model/service"
+	"Teste/src/view"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-func CreateUser(c *gin.Context) {
+func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
@@ -22,10 +23,10 @@ func CreateUser(c *gin.Context) {
 		userRequest.Username,
 		userRequest.Password,
 	)
-	service := service.NewUserDomainServece()
-	if err := service.CreateUser(domain); err != nil {
+
+	if err := uc.service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}
-
+	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
 }
