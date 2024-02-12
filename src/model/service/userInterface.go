@@ -3,6 +3,7 @@ package service
 import (
 	"Teste/src/configuration/rest_error"
 	"Teste/src/model"
+	"gorm.io/gorm"
 )
 
 func NewUserDomainServece() UserDomainService {
@@ -10,6 +11,13 @@ func NewUserDomainServece() UserDomainService {
 }
 
 type userDomainService struct {
+	gorm.Model
+	fullName string
+	email    string
+	username string
+	password string
+	//birthday time.Time
+
 }
 
 type UserDomainService interface {
