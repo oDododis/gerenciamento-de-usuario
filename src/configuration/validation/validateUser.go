@@ -1,5 +1,7 @@
 package validation
 
+//Melhora a vualisação do erro, colocando as mesagens de erro nos campos criados no RestError, validando os erros
+
 import (
 	"Teste/src/configuration/rest_error"
 	"encoding/json"
@@ -16,6 +18,8 @@ var (
 	translate ut.Translator
 )
 
+//Inicia a validação
+
 func init() {
 	if val, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		en := en.New()
@@ -27,16 +31,19 @@ func init() {
 		}
 	}
 }
-func ValidateUserError(validation_err error) *rest_error.RestError {
+
+// Coloca os error validados nos campos corretos em RestError
+
+func ValidateUserError(validationErr error) *rest_error.RestError {
 	var jsonErr *json.UnmarshalTypeError
 	var jsonValidationError validator.ValidationErrors
 
-	if errors.As(validation_err, &jsonErr) {
+	if errors.As(validationErr, &jsonErr) {
 		return rest_error.NewBadRequestError("Tipo de campo invalido")
-	} else if errors.As(validation_err, &jsonValidationError) {
-		errorsCauses := []rest_error.Causes{}
+	} else if errors.As(validationErr, &jsonValidationError) {
+		var errorsCauses []rest_error.Causes
 
-		for _, e := range validation_err.(validator.ValidationErrors) {
+		for _, e := range validationErr.(validator.ValidationErrors) {
 			cause := rest_error.Causes{
 				Message: e.Translate(translate),
 				Field:   e.Field(),

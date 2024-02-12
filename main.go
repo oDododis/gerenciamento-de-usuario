@@ -5,6 +5,7 @@ import (
 	"Teste/src/controller/routes"
 	"Teste/src/model/service"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
@@ -19,18 +20,23 @@ type Users struct {
 }
 
 func main() {
+
+	//Iniciando o godotenv
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	//Inicialização das dependencias
 	services := service.NewUserDomainServece()
 	userController := controller.NewUserControllerInterface(services)
 
+	//Iniciando as Rotas
 	router := gin.Default()
-
 	routes.InitRoutes(&router.RouterGroup, userController)
-
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
-
 }
 
 func createUser(user Users) {

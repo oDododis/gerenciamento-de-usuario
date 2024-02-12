@@ -1,5 +1,7 @@
 package model
 
+//Criando um Dominio de Usuario para coletar as informações localmente e distribuir individualmente
+
 import (
 	"crypto/md5"
 	"encoding/hex"
@@ -14,6 +16,8 @@ type UserDomainInterface interface {
 	EncryptPassword()
 }
 
+//Cria o Domionio do Usuario
+
 func NewUserDomain(fullName, email, username, password string) UserDomainInterface {
 	return &userDomain{fullName, email, username, password}
 }
@@ -25,6 +29,8 @@ type userDomain struct {
 	password string
 	//birthday time.Time
 }
+
+//Funções para pegar os dados do usuario
 
 func (ud *userDomain) GetFullName() string {
 	return ud.fullName
@@ -38,6 +44,8 @@ func (ud *userDomain) GetUsername() string {
 func (ud *userDomain) GetPassword() string {
 	return ud.password
 }
+
+//Emcrypta a Senha com md5
 
 func (ud *userDomain) EncryptPassword() {
 	hash := md5.New()
