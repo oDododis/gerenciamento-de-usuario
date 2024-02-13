@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
 )
 
 func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *rest_error.RestError {
@@ -14,19 +13,27 @@ func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *r
 
 	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
 	if err != nil {
-		rest_error.NewInternalServerError("Não abriu o gorm")
+		return rest_error.NewInternalServerError("Não iniciou o Banco de Dados em service/createUser")
 	}
-	err = db.AutoMigrate(userDomainService{})
+	err = db.AutoMigrate(&userDomainService{})
 	if err != nil {
 		return nil
 	}
 
-	err = db.First(&ud, "email = ?", userDomain.GetEmail()).Error // db.First(&user, "username = ?", user.Username).Error
+	ud = &userDomainService{
+		FullName: userDomain.GetFullName(),
+		Email:    userDomain.GetEmail(),
+		Username: userDomain.GetUsername(),
+		Password: userDomain.GetPassword(),
+	}
+
+	err = db.First(&ud, "email = ?", ud.Email).Error // db.First(&user, "username = ?", user.Username).Error
+	err = db.First(&ud, "username = ?", ud.Username).Error
 	if err != nil {
-		log.Println("Não tem Email.")
+		fmt.Println("PASSOU POR AQUI.")
 		db.Create(&ud)
 	} else {
-		rest_error.NewBadRequestError("Não pode ser criado, email existente.")
+		return rest_error.NewBadRequestError("Email ou Username existente.")
 	}
 	fmt.Println(userDomain.GetPassword())
 	return nil

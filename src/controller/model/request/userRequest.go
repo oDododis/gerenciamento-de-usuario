@@ -3,7 +3,7 @@ package request
 // Requisita o User com restriçoes
 
 type UserRequest struct {
-	//gorm.Model
+	ID       string `json:"id" binding:""`
 	FullName string `json:"fullName" binding:"required,min=3,max=150"`
 	Email    string `json:"email" binding:"required,email"`
 	Username string `json:"username" binding:"required,min=3,max=150"`

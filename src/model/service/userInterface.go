@@ -12,10 +12,10 @@ func NewUserDomainServece() UserDomainService {
 
 type userDomainService struct {
 	gorm.Model
-	fullName string
-	email    string
-	username string
-	password string
+	FullName string
+	Email    string
+	Username string
+	Password string
 	//birthday time.Time
 
 }

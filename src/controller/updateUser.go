@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func (uc *userControllerInterface) CreateUser(c *gin.Context) {
+func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
@@ -25,8 +25,8 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 		userRequest.Password,
 		//userResquest.Birthday
 	)
-
-	if err := uc.service.CreateUser(domain); err != nil {
+	ID := "2"
+	if err := uc.service.UpdateUser(ID, domain); err != nil {
 
 		c.JSON(err.Code, err)
 		return
