@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// Recebe o paramertro do id e manda Deleta-lo
+
 func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 
 	userID := c.Param("userID")

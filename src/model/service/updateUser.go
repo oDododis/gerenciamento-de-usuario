@@ -10,12 +10,13 @@ import (
 
 func (ud *userDomainService) UpdateUser(userID string, userDomain model.UserDomainInterface) *rest_error.RestError {
 	userDomain.EncryptPassword()
+
 	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
 	if err != nil {
 		return rest_error.NewInternalServerError("Não iniciou o Banco de Dados em service/updateUser")
 	}
-	err = db.AutoMigrate(&userDomainService{})
-	if err != nil {
+
+	if err = db.AutoMigrate(&userDomainService{}); err != nil {
 		return nil
 	}
 	userid, _ := strconv.Atoi(userID)
