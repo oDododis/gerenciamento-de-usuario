@@ -99,5 +99,5 @@ func excludeUser(ID int) {
 		return
 	}
 	log.Println(ID)
-	//db.Exec("DELETE FROM users WHERE ID = ?", ID)
+	db.Exec("DELETE FROM user_domain_services WHERE ID = ?", ID)
 }

@@ -18,7 +18,6 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 	}
 
 	domain := model.NewUserDomain(
-		//userRequest gorm.Model
 		userRequest.FullName,
 		userRequest.Email,
 		userRequest.Username,

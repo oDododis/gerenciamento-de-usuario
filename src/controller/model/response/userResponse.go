@@ -4,7 +4,7 @@ package response
 
 type UserResponse struct {
 	//gorm.Model
-	ID       string `json:"id"`
+	//ID       string `json:"id"`
 	FullName string `json:"fullName"`
 	Email    string `json:"email"`
 	Username string `json:"username"`

@@ -18,15 +18,14 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	}
 
 	domain := model.NewUserDomain(
-		//userRequest gorm.Model
 		userRequest.FullName,
 		userRequest.Email,
 		userRequest.Username,
 		userRequest.Password,
 		//userResquest.Birthday
 	)
-	ID := "2"
-	if err := uc.service.UpdateUser(ID, domain); err != nil {
+	userID := c.Param("userID")
+	if err := uc.service.UpdateUser(userID, domain); err != nil {
 
 		c.JSON(err.Code, err)
 		return
