@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+//Recebe o ID do Controller e deleta o usuario deste ID
+
 func (ud *userDomainService) DeleteUser(userID string) *rest_error.RestError {
 	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
 	if err != nil {
@@ -22,7 +24,6 @@ func (ud *userDomainService) DeleteUser(userID string) *rest_error.RestError {
 		return rest_error.NewBadRequestError("ID invalido (menor ou iqual a 0).")
 	}
 	var lastUd userDomainService
-	db.Delete(&lastUd, userID)
-
+	db.Delete(&lastUd, "id = ?", userID)
 	return nil
 }

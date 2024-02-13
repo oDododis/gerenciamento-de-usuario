@@ -6,6 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
+//Cria um UserDomain privado apartir do Publico para manter os dado apenas com este dominio e o banco
+
 func NewUserDomainServece() UserDomainService {
 	return &userDomainService{}
 }
@@ -18,6 +20,8 @@ type userDomainService struct {
 	Password string
 	//birthday time.Time
 }
+
+// Não sei pra que serve mas se tirar da erro.
 
 func (ud *userDomainService) GetFullName() string {
 	//TODO implement me
@@ -43,6 +47,8 @@ func (ud *userDomainService) EncryptPassword() {
 	//TODO implement me
 	panic("implement me")
 }
+
+//Tipos de serviço para utilizarmos
 
 type UserDomainService interface {
 	CreateUser(model.UserDomainInterface) *rest_error.RestError

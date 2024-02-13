@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-// Recebe o Requeste e manda Criar o usuario
+// Recebe o Request e manda Criar o usuario
 
 func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest

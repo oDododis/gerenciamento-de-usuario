@@ -6,17 +6,8 @@ import (
 	"Teste/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/gorm"
 	"log"
 )
-
-type Users struct {
-	gorm.Model
-	FullName string
-	Email    string
-	Username string
-	Password string
-}
 
 func main() {
 
@@ -26,7 +17,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	//Inicialização das dependencias
+	//Inicialização das dependencias de serviço e controle
 	services := service.NewUserDomainServece()
 	userController := controller.NewUserControllerInterface(services)
 
@@ -37,18 +28,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
-//// Excluir da lista por completo
-//func excludeUser(ID int) {
-//	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
-//	if err != nil {
-//		panic("failed to connect database")
-//	}
-//	err = db.AutoMigrate(&Users{})
-//	if err != nil {
-//		return
-//	}
-//	TABLE := "user_domain_services"
-//	log.Println(ID)
-//	db.Exec("DELETE FROM ? WHERE ID = ?", TABLE, ID)
-//}

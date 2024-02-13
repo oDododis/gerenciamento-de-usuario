@@ -8,6 +8,8 @@ import (
 	"strconv"
 )
 
+//Recebe os campos do controller, o id do usuario e atualiza os campos modificados no envio
+
 func (ud *userDomainService) UpdateUser(userID string, userDomain model.UserDomainInterface) *rest_error.RestError {
 	userDomain.EncryptPassword()
 

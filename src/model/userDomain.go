@@ -7,6 +7,8 @@ import (
 	"encoding/hex"
 )
 
+//Cria os comandos para coletar os campos enviados
+
 type UserDomainInterface interface {
 	GetFullName() string
 	GetEmail() string
@@ -16,7 +18,7 @@ type UserDomainInterface interface {
 	EncryptPassword()
 }
 
-//Cria o Domionio do Usuario
+//Cria o Domionio do Usuario privado
 
 func NewUserDomain(fullName, email, username, password string) UserDomainInterface {
 	return &userDomain{fullName, email, username, password}
@@ -30,7 +32,7 @@ type userDomain struct {
 	//birthday time.Time
 }
 
-//Funções para pegar os dados do usuario
+//Funções para pegar os dados do usuario de forma privada e apenas aqui
 
 func (ud *userDomain) GetFullName() string {
 	return ud.fullName
@@ -45,7 +47,7 @@ func (ud *userDomain) GetPassword() string {
 	return ud.password
 }
 
-//Emcrypta a Senha com md5
+//Emcrypta a Senha com md5 com a senha local.
 
 func (ud *userDomain) EncryptPassword() {
 	hash := md5.New()

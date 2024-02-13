@@ -9,6 +9,8 @@ import (
 	"net/http"
 )
 
+//Recebe o Request e manda atualizar os dados
+
 func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	var userRequest request.UserRequest
 

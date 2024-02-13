@@ -7,13 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Cria um Controle de Interface
+// Cria os Controles para utilizarmos na criação, atualização, procura e exclusão de usuario
 
 func NewUserControllerInterface(serviceInterface service.UserDomainService) UserControllerInterface {
 	return &userControllerInterface{
 		service: serviceInterface,
 	}
 }
+
+//lista os comando criados acima
 
 type UserControllerInterface interface {
 	FindUserID(c *gin.Context)
