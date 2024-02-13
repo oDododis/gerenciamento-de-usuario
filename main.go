@@ -6,7 +6,6 @@ import (
 	"Teste/src/model/service"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
 )
@@ -39,65 +38,17 @@ func main() {
 	}
 }
 
-func createUser(user Users) {
-	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-
-	err = db.AutoMigrate(&Users{})
-	if err != nil {
-		return
-	}
-
-	err = db.First(&user, "email = ?", user.Email).Error // db.First(&user, "username = ?", user.Username).Error
-	if err != nil {
-		log.Println("Não tem Email.")
-		db.Create(&user)
-	} else {
-		log.Println("Já tem Email.")
-	}
-}
-
-func updateInfo(ID int, user Users) {
-	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	err = db.AutoMigrate(&Users{})
-	if err != nil {
-		return
-	}
-	var lastUser Users
-	db.First(&lastUser, ID)
-	db.Model(&lastUser).Updates(&user)
-	log.Println("Update concluido.")
-}
-
-func deleteUser(ID int) {
-	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	err = db.AutoMigrate(&Users{})
-	if err != nil {
-		return
-	}
-
-	var user Users
-	db.Delete(&user, ID)
-}
-
-// Excluir da lista por completo
-func excludeUser(ID int) {
-	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-	err = db.AutoMigrate(&Users{})
-	if err != nil {
-		return
-	}
-	log.Println(ID)
-	db.Exec("DELETE FROM user_domain_services WHERE ID = ?", ID)
-}
+//// Excluir da lista por completo
+//func excludeUser(ID int) {
+//	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
+//	if err != nil {
+//		panic("failed to connect database")
+//	}
+//	err = db.AutoMigrate(&Users{})
+//	if err != nil {
+//		return
+//	}
+//	TABLE := "user_domain_services"
+//	log.Println(ID)
+//	db.Exec("DELETE FROM ? WHERE ID = ?", TABLE, ID)
+//}
