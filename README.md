@@ -9,8 +9,12 @@ Item necessario para rodar-lo:
 Para instalar 
 
 ### GORM:
+````
 go get -u gorm.io/gorm
 go get -u gorm.io/driver/sqlite
+````
 
-### gingonic: 
+### GINGONIC: 
+````
 go get -u github.com/gin-gonic/gin
+````
