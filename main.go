@@ -5,17 +5,10 @@ import (
 	"Teste/src/controller/routes"
 	"Teste/src/model/service"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"log"
 )
 
 func main() {
-
-	//Iniciando o godotenv
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 
 	//Inicialização das dependencias de serviço e controle
 	services := service.NewUserDomainServece()
