@@ -3,7 +3,7 @@ Item necessario para rodar-lo:
 
 ### Go:
 - A linguagem utilizada é: [Go](https://golang.org/dl/)
-- 
+- Para testar o código: [Postman](https://www.postman.com/downloads/ )
 
 ## Instalação
 Para instalar 
