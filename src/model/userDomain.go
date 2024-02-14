@@ -23,6 +23,9 @@ type UserDomainInterface interface {
 func NewUserDomain(fullName, email, username, password string) UserDomainInterface {
 	return &userDomain{fullName, email, username, password}
 }
+func NewUserDomainLogin(email, password string) UserDomainInterface {
+	return &userDomain{email: email, password: password}
+}
 
 type userDomain struct {
 	fullName string

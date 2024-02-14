@@ -4,33 +4,28 @@ import (
 	"Teste/src/configuration/validation"
 	"Teste/src/controller/model/request"
 	"Teste/src/model"
-	"Teste/src/view"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-// Recebe o Request e manda Criar o usuario
+// Recebe um Login Request e retorna as informações do usuario
 
-func (uc *userControllerInterface) CreateUser(c *gin.Context) {
-	var userRequest request.UserRequest
-
+func (uc *userControllerInterface) Login(c *gin.Context) {
+	var userRequest request.LoginRequest
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		restError := validation.ValidateUserError(err)
 		c.JSON(restError.Code, restError)
 	}
 
-	domain := model.NewUserDomain(
-		userRequest.FullName,
+	domain := model.NewUserDomainLogin(
 		userRequest.Email,
-		userRequest.Username,
 		userRequest.Password,
-		//userResquest.Birthday
 	)
-
-	if err := uc.service.CreateUserServices(domain); err != nil {
-
+	userDomain, err := uc.service.LoginServices(domain)
+	if err != nil {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
+
+	c.JSON(http.StatusOK, userDomain)
 }

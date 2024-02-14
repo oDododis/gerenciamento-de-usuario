@@ -22,11 +22,14 @@ func (ud *userDomainService) FindUserIDServices(userID string) (model.UserDomain
 	}
 	userid, _ := strconv.Atoi(userID)
 	if userid <= 0 {
-		return nil, rest_error.NewBadRequestError("ID invalido (menor ou iqual a 0).")
+		return nil, rest_error.NewNotFoundError("ID invalido (menor ou iqual a 0).")
 	}
 	var lastUd userDomainService
-	db.First(&lastUd, userID)
 
+	err = db.First(&lastUd, userID).Error
+	if err != nil {
+		return nil, rest_error.NewNotFoundError("ID não encontrado.")
+	}
 	return &lastUd, nil
 }
 
@@ -43,10 +46,30 @@ func (ud *userDomainService) FindUserEmailServices(userEmail string) (model.User
 	}
 
 	if userEmail == "" {
-		return nil, rest_error.NewBadRequestError("Email vazil")
+		return nil, rest_error.NewNotFoundError("Email vazil")
+	} else {
+		var lastUd userDomainService
+		err = db.First(&lastUd, "email = ?", userEmail).Error
+		if err != nil {
+			return nil, rest_error.NewNotFoundError("Email não encontrado.")
+		}
+		return &lastUd, nil
+	}
+}
+
+func (ud *userDomainService) HowMuchUsers() (int, *rest_error.RestError) {
+	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})
+	if err != nil {
+		return 0, rest_error.NewInternalServerError("Não iniciou o Banco de Dados em service/findUser")
+	}
+
+	if err = db.AutoMigrate(&userDomainService{}); err != nil {
+		return 0, rest_error.NewInternalServerError("Não iniciou o Banco de Dados em service/findUser")
 	}
 	var lastUd userDomainService
-	db.First(&lastUd, "email = ?", userEmail)
-
-	return &lastUd, nil
+	err = db.Last(&lastUd).Error
+	if err != nil {
+		return 0, rest_error.NewNotFoundError("Não tem Usuarios")
+	}
+	return int(lastUd.ID), nil
 }

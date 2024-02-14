@@ -21,39 +21,36 @@ type userDomainService struct {
 	//birthday time.Time
 }
 
-// Não sei pra que serve mas se tirar da erro.
+// Funcões pra coletar as informações individualmente para o view
 
 func (ud *userDomainService) GetFullName() string {
-	//TODO implement me
-	panic("implement me")
+	return ud.FullName
 }
 
 func (ud *userDomainService) GetEmail() string {
-	//TODO implement me
-	panic("implement me")
+	return ud.Email
 }
 
 func (ud *userDomainService) GetUsername() string {
-	//TODO implement me
-	panic("implement me")
+	return ud.Username
 }
 
 func (ud *userDomainService) GetPassword() string {
-	//TODO implement me
-	panic("implement me")
+	return ud.Password
 }
 
 func (ud *userDomainService) EncryptPassword() {
-	//TODO implement me
-	panic("implement me")
+
 }
 
 //Tipos de serviço para utilizarmos
 
 type UserDomainService interface {
-	CreateUser(model.UserDomainInterface) *rest_error.RestError
-	UpdateUser(string, model.UserDomainInterface) *rest_error.RestError
+	CreateUserServices(model.UserDomainInterface) *rest_error.RestError
+	DeleteUserServices(string) *rest_error.RestError
 	FindUserIDServices(string) (model.UserDomainInterface, *rest_error.RestError)
 	FindUserEmailServices(string) (model.UserDomainInterface, *rest_error.RestError)
-	DeleteUser(string) *rest_error.RestError
+	HowMuchUsers() (int, *rest_error.RestError)
+	LoginServices(model.UserDomainInterface) (model.UserDomainInterface, *rest_error.RestError)
+	UpdateUserServices(string, model.UserDomainInterface) *rest_error.RestError
 }

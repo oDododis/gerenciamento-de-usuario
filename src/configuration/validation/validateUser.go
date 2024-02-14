@@ -14,7 +14,6 @@ import (
 )
 
 var (
-	Validate  = validator.New()
 	translate ut.Translator
 )
 

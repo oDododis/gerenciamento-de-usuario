@@ -27,7 +27,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		//userResquest.Birthday
 	)
 	userID := c.Param("userID")
-	if err := uc.service.UpdateUser(userID, domain); err != nil {
+	if err := uc.service.UpdateUserServices(userID, domain); err != nil {
 
 		c.JSON(err.Code, err)
 		return

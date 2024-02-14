@@ -10,7 +10,7 @@ import (
 
 //Recebe os campos do Controller e cria o usuario no Banco de Dados
 
-func (ud *userDomainService) CreateUser(userDomain model.UserDomainInterface) *rest_error.RestError {
+func (ud *userDomainService) CreateUserServices(userDomain model.UserDomainInterface) *rest_error.RestError {
 	userDomain.EncryptPassword()
 
 	db, err := gorm.Open(sqlite.Open("usersFromBreadOfPotato.db"), &gorm.Config{})

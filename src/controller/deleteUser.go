@@ -10,10 +10,10 @@ import (
 func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 
 	userID := c.Param("userID")
-	if err := uc.service.DeleteUser(userID); err != nil {
+	if err := uc.service.DeleteUserServices(userID); err != nil {
 
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, userID)
+	c.JSON(http.StatusOK, "User excluido")
 }
