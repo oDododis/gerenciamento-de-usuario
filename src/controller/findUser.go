@@ -17,7 +17,7 @@ func (uc *userControllerInterface) FindUserID(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(userDomain))
+	c.JSON(http.StatusAccepted, view.ConvertDomainToResponse(userDomain))
 }
 
 //Fas a busca por email
@@ -29,7 +29,7 @@ func (uc *userControllerInterface) FindUserEmail(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(userDomain))
+	c.JSON(http.StatusAccepted, view.ConvertDomainToResponse(userDomain))
 }
 
 // Fas uma listagem dos usuarios
@@ -47,8 +47,8 @@ func (uc *userControllerInterface) UsersList(c *gin.Context) {
 			c.JSON(err.Code, err)
 			return
 		}
-		c.JSON(http.StatusOK, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-		c.JSON(http.StatusOK, view.ConvertDomainToResponse(userDomain))
+		c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+		c.JSON(http.StatusAccepted, view.ConvertDomainToResponse(userDomain))
 	}
-	c.JSON(http.StatusOK, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+	c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
 }

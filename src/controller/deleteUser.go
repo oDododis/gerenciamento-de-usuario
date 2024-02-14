@@ -15,5 +15,5 @@ func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, "User excluido")
+	c.JSON(http.StatusAccepted, "User excluido")
 }

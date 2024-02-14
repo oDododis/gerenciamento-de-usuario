@@ -27,5 +27,5 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, userDomain)
+	c.JSON(http.StatusAccepted, userDomain)
 }

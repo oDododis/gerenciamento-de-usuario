@@ -32,5 +32,5 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
+	c.JSON(http.StatusAccepted, view.ConvertDomainToResponse(domain))
 }

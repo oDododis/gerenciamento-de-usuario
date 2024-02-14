@@ -32,5 +32,5 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
+	c.JSON(http.StatusCreated, view.ConvertDomainToResponse(domain))
 }
