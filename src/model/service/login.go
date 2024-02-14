@@ -24,14 +24,14 @@ func (ud *userDomainService) LoginServices(userDomain model.UserDomainInterface)
 		Password: userDomain.GetPassword(),
 	}
 	if ud.Email == "" {
-		return nil, rest_error.NewBadRequestError("Email vazil")
+		return nil, rest_error.NewNotFoundError("Email vazil")
 	}
 	var lastUd userDomainService
 	err = db.First(&lastUd, "email = ?", ud.Email).Error
 	if err != nil {
-		return nil, rest_error.NewBadRequestError("Email não existe.")
+		return nil, rest_error.NewNotFoundError("Email não existe.")
 	} else if lastUd.Password != ud.Password {
-		return nil, rest_error.NewBadRequestError("Senha incorreta.")
+		return nil, rest_error.NewForbiddenError("Senha incorreta.")
 	} else {
 		return &lastUd, nil
 	}
