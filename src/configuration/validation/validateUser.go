@@ -51,7 +51,7 @@ func ValidateUserError(validationErr error) *rest_error.RestError {
 			errorsCauses = append(errorsCauses, cause)
 		}
 
-		return rest_error.NewBadRequestValidationError("Alguma coisa ta errada", errorsCauses)
+		return rest_error.NewBadRequestValidationError("Campo enviado invalido", errorsCauses)
 	} else {
 		return rest_error.NewBadRequestError("Erro tentando converter um campo")
 	}

@@ -21,6 +21,12 @@ type userDomainService struct {
 	//birthday time.Time
 }
 
+type tokenDomainService struct {
+	Token      string
+	UserDomain userDomainService `gorm:"foreignKey:UserID"`
+	UserID     uint
+}
+
 // Funcões pra coletar as informações individualmente para o view
 
 func (ud *userDomainService) GetFullName() string {
