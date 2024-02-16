@@ -38,9 +38,8 @@ func (ud *userDomainService) LoginServices(userDomain model.UserDomainInterface)
 		return nil, rest_error.NewForbiddenError("Senha incorreta.")
 	} else {
 		autentication := &tokenDomainService{
-			Token:      token,
-			UserDomain: *ud,
-			UserID:     ud.ID,
+			Token:  token,
+			UserID: lastUd.ID,
 		}
 		if err = db.AutoMigrate(&tokenDomainService{}); err != nil {
 			return nil, rest_error.NewInternalServerError("Não iniciou o Banco de Dados em service/findUser")
