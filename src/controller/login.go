@@ -15,6 +15,7 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		restError := validation.ValidateUserError(err)
 		c.JSON(restError.Code, restError)
+		return
 	}
 
 	domain := model.NewUserDomainLogin(
@@ -27,5 +28,5 @@ func (uc *userControllerInterface) Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusAccepted, userDomain)
+	c.JSON(http.StatusAccepted, "Token: "+userDomain)
 }

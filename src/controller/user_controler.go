@@ -9,9 +9,10 @@ import (
 
 // Cria os Controles para utilizarmos na criação, atualização, procura e exclusão de usuario
 
-func NewUserControllerInterface(serviceInterface service.UserDomainService) UserControllerInterface {
+func NewUserControllerInterface(serviceInterface service.UserDomainService, serviceInterfaceToken service.TokenDomainService) UserControllerInterface {
 	return &userControllerInterface{
-		service: serviceInterface,
+		service:      serviceInterface,
+		serviceToken: serviceInterfaceToken,
 	}
 }
 
@@ -28,5 +29,6 @@ type UserControllerInterface interface {
 }
 
 type userControllerInterface struct {
-	service service.UserDomainService
+	service      service.UserDomainService
+	serviceToken service.TokenDomainService
 }

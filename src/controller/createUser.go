@@ -17,6 +17,7 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		restError := validation.ValidateUserError(err)
 		c.JSON(restError.Code, restError)
+		return
 	}
 
 	domain := model.NewUserDomain(
@@ -24,7 +25,6 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 		userRequest.Email,
 		userRequest.Username,
 		userRequest.Password,
-		//userResquest.Birthday
 	)
 
 	if err := uc.service.CreateUserServices(domain); err != nil {
