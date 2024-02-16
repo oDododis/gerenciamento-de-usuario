@@ -14,6 +14,11 @@ func NewUserControllerInterface(serviceInterface service.UserDomainService) User
 		service: serviceInterface,
 	}
 }
+func NewUserControllerToken(serviceToken service.TokenDomainService) UserControllerInterface {
+	return &userControllerInterface{
+		tokenService: serviceToken,
+	}
+}
 
 //lista os comando criados acima
 
@@ -28,5 +33,6 @@ type UserControllerInterface interface {
 }
 
 type userControllerInterface struct {
-	service service.UserDomainService
+	service      service.UserDomainService
+	tokenService service.TokenDomainService
 }

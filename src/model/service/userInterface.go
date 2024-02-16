@@ -12,6 +12,10 @@ func NewUserDomainServece() UserDomainService {
 	return &userDomainService{}
 }
 
+func NewTokenDomainServece() TokenDomainService {
+	return &tokenDomainService{}
+}
+
 type userDomainService struct {
 	gorm.Model
 	FullName string
@@ -57,6 +61,10 @@ type UserDomainService interface {
 	FindUserIDServices(string) (model.UserDomainInterface, *rest_error.RestError)
 	FindUserEmailServices(string) (model.UserDomainInterface, *rest_error.RestError)
 	HowMuchUsers() (int, *rest_error.RestError)
-	LoginServices(model.UserDomainInterface) (model.UserDomainInterface, *rest_error.RestError)
+	LoginServices(model.UserDomainInterface) (string, *rest_error.RestError)
 	UpdateUserServices(string, model.UserDomainInterface) *rest_error.RestError
+}
+
+type TokenDomainService interface {
+	TokenValidation(string) *rest_error.RestError
 }

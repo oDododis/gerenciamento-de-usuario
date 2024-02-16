@@ -12,6 +12,11 @@ import (
 //Recebe o Request e manda atualizar os dados
 
 func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
+	//autenticationToken := c.Request.Header.Get("Authorization")
+	//if err := uc.tokenService.TokenValidation(autenticationToken); err != nil {
+	//	c.JSON(err.Code, err)
+	//	return
+	//}
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
@@ -27,8 +32,8 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		//userResquest.Birthday
 	)
 	userID := c.Param("userID")
-	if err := uc.service.UpdateUserServices(userID, domain); err != nil {
 
+	if err := uc.service.UpdateUserServices(userID, domain); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}

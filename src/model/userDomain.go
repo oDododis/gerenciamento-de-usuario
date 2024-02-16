@@ -14,7 +14,6 @@ type UserDomainInterface interface {
 	GetEmail() string
 	GetUsername() string
 	GetPassword() string
-
 	EncryptPassword()
 }
 

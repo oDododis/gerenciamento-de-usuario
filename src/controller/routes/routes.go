@@ -9,7 +9,7 @@ import (
 
 // Iniciando as Rotas
 
-func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface) {
+func InitRoutes(r *gin.RouterGroup, userController controller.UserControllerInterface, userControllerToken controller.UserControllerInterface) {
 
 	r.GET("getUserID/:userID", userController.FindUserID)
 	r.GET("getUserEmail/:userEmail", userController.FindUserEmail)
