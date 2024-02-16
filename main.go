@@ -12,7 +12,8 @@ func main() {
 
 	//Inicialização das dependencias de serviço e controle
 	services := service.NewUserDomainServece()
-	userController := controller.NewUserControllerInterface(services)
+	servicesToken := service.NewTokenDomainService()
+	userController := controller.NewUserControllerInterface(services, servicesToken)
 
 	//Iniciando as Rotas
 	router := gin.Default()

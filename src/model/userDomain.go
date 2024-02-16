@@ -10,6 +10,7 @@ import (
 //Cria os comandos para coletar os campos enviados
 
 type UserDomainInterface interface {
+	GetID() uint
 	GetFullName() string
 	GetEmail() string
 	GetUsername() string
@@ -21,22 +22,24 @@ type UserDomainInterface interface {
 //Cria o Domionio do Usuario privado
 
 func NewUserDomain(fullName, email, username, password string) UserDomainInterface {
-	return &userDomain{fullName, email, username, password}
+	return &userDomain{fullName: fullName, email: email, username: username, password: password}
 }
 func NewUserDomainLogin(email, password string) UserDomainInterface {
 	return &userDomain{email: email, password: password}
 }
 
 type userDomain struct {
+	id       uint
 	fullName string
 	email    string
 	username string
 	password string
-	//birthday time.Time
 }
 
-//Funções para pegar os dados do usuario de forma privada e apenas aqui
-
+// Funções para pegar os dados do usuario de forma privada e apenas aqui
+func (ud *userDomain) GetID() uint {
+	return ud.id
+}
 func (ud *userDomain) GetFullName() string {
 	return ud.fullName
 }

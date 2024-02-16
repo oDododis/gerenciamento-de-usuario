@@ -32,7 +32,6 @@ func (ud *userDomainService) CreateUserServices(userDomain model.UserDomainInter
 	err = db.First(&ud, "email = ?", ud.Email).Error // db.First(&user, "username = ?", user.Username).Error
 	err = db.First(&ud, "username = ?", ud.Username).Error
 	if err != nil {
-		fmt.Println("PASSOU POR AQUI.")
 		db.Create(&ud)
 	} else {
 		return rest_error.NewBadRequestError("Email ou Username existente.")

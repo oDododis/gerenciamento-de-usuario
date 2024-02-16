@@ -11,6 +11,13 @@ import (
 func NewUserDomainServece() UserDomainService {
 	return &userDomainService{}
 }
+func NewTokenDomainService() TokenDomainService {
+	return &tokenDomainService{}
+}
+
+//func NewTokenDomainServece() TokenDomainService {
+//	return &tokenDomainService{}
+//}
 
 type userDomainService struct {
 	gorm.Model
@@ -21,7 +28,16 @@ type userDomainService struct {
 	//birthday time.Time
 }
 
+type tokenDomainService struct {
+	Token string
+	UID   uint
+}
+
 // Funcões pra coletar as informações individualmente para o view
+
+func (ud *userDomainService) GetID() uint {
+	return ud.ID
+}
 
 func (ud *userDomainService) GetFullName() string {
 	return ud.FullName
@@ -50,7 +66,12 @@ type UserDomainService interface {
 	DeleteUserServices(string) *rest_error.RestError
 	FindUserIDServices(string) (model.UserDomainInterface, *rest_error.RestError)
 	FindUserEmailServices(string) (model.UserDomainInterface, *rest_error.RestError)
+	ListUserIDServices(string) (model.UserDomainInterface, *rest_error.RestError)
 	HowMuchUsers() (int, *rest_error.RestError)
-	LoginServices(model.UserDomainInterface) (model.UserDomainInterface, *rest_error.RestError)
+	LoginServices(model.UserDomainInterface) (string, *rest_error.RestError)
 	UpdateUserServices(string, model.UserDomainInterface) *rest_error.RestError
+}
+
+type TokenDomainService interface {
+	TokenAutentication(string) *rest_error.RestError
 }

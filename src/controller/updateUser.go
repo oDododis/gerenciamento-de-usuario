@@ -7,24 +7,30 @@ import (
 	"Teste/src/view"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
 //Recebe o Request e manda atualizar os dados
 
 func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	var userRequest request.UserRequest
-
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		restError := validation.ValidateUserError(err)
 		c.JSON(restError.Code, restError)
+		return
 	}
+	autenticationToken := c.Request.Header.Get("Authorization")
+	token := strings.Split(autenticationToken, " ")
+	if err := uc.serviceToken.TokenAutentication(token[1]); err != nil {
 
+		c.JSON(err.Code, err)
+		return
+	}
 	domain := model.NewUserDomain(
 		userRequest.FullName,
 		userRequest.Email,
 		userRequest.Username,
 		userRequest.Password,
-		//userResquest.Birthday
 	)
 	userID := c.Param("userID")
 	if err := uc.service.UpdateUserServices(userID, domain); err != nil {
@@ -32,5 +38,5 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
+	c.JSON(http.StatusAccepted, view.ConvertDomainToResponse(domain))
 }
