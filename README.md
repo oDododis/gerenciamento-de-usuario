@@ -1,7 +1,5 @@
-# Gerenciador de Usuario Simples.
-
-
-## Item necessario para rodar-lo:
+# Gerenciador de Usuário Simples.
+## Item necessario para roda-lo:
 - A linguagem utilizada é: [Go](https://golang.org/dl/)
 - Para enviar as requisições localmente: [Postman Desktop](https://www.postman.com/downloads/ )
 
@@ -34,11 +32,11 @@ Temos as seguintes Endpoints no servidor:
 
 ### 1. **POST /createUser**
    
- Este Endpoint cria o usuário. Para criar o usuario precisamos ter as seguntes informações, com os seguntes requisitos:
+ Este Endpoint cria o usuário. Para criar o usuário precisamos ter as segunites informações, com os seguintes requisitos:
   - Nome completo, com um mínimo de 3 e um máximo de 150 caracteres.
   - Email, com o formato de email.
   - Username, com um mínimo de 3 e um máximo de 150 caracteres.
-  - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguites caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
+  - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguintes caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
  
  No Postman a requisição dos dados devem ser feita no Body e raw na formatação JSON:
  ![img.png](img/img.png)
@@ -61,7 +59,7 @@ Temos as seguintes Endpoints no servidor:
         "password": "2222@@@@"
         }
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 201 Created`:
 
 Informaçoes colocadas corretamente:
@@ -73,7 +71,7 @@ Como resposta para casos de fracasso, retornará informações sobre o erro:
 
 #### Exemplos para `Status 400 Bad Request`: 
    
-O nome completo não segue as restrioções mínimas:
+O nome completo não segue as restrições mínimas:
 ![img_2.png](img/img_2.png)
 
 O email já existe no Banco de Dados:
@@ -82,9 +80,9 @@ O email já existe no Banco de Dados:
 - Responderá com as informações com tipo de erro.
 
 ### 2. **POST /login**
-Este Endpoint faz o login do usuário. Para fazer o login presiramos ter as informações parecida com a do Create User, com os serguintes requisitos:
+Este Endpoint faz o login do usuário. Para fazer o login precisamos ter as informações parecida com a do Create User, com os seguintes requisitos:
    - Email, com o formato de email.
-   - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguites caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
+   - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguires caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
 
 O email e a senha devem ser o mesmo de algum usuario ques esteje no banco de dados e a requisição deve ser feita a mesma maneira do Create User, no Body, raw e em formatação JSON:
 ![img_4.png](img/img_4.png)
@@ -94,11 +92,11 @@ O email e a senha devem ser o mesmo de algum usuario ques esteje no banco de dad
         "password": "1234567*"
         }
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
 Informaçoes colocadas corretamente:
 ![img_5.png](img/img_5.png)
-- Responderá com as informações do Token que sera utilizado para as requisições restantes.
+- Responderá com as informações do Token que será utilizado para as requisições restantes.
 
 Como resposta para casos de fracasso, retornará informações sobre o erro:
 #### Exemplo para `Status 400 Bad Request`:
@@ -113,19 +111,18 @@ Email não existe no Banco de Dados
 - Responderá com as informações com tipo de erro.
 
 ### 3. **PUT /updateUser/{ID do usuário}**
-Este Endpoint atualiza o usuário. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+Este Endpoint atualiza o usuário. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocar no em Authorization com o tipo Bearer token:
 ![img_9.png](img/img_9.png)
-Na url deve estar o ID do usuario:
+Na url deve estar o ID do usuário:
 #### Exemplo:
 Com o ID do usuario 2:
 `http://localhost:8080/updateUser/2`
 
-E para a requisição dos dados temos que colocar os mesmo tipos de dados colocados no Create User, no Body, raw e com formatação em JSON:
-
+E para a requisição dos dados temos que colocar os mesmos tipos de dados colocados no Create User, no Body, raw e com formatação em JSON:
  - Nome completo, com um mínimo de 3 e um máximo de 150 caracteres.
  - Email, com o formato de email.
  - Username, com um mínimo de 3 e um máximo de 150 caracteres.
- - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguites caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
+ - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguintes caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
 
 ![img_10.png](img/img_10.png)
 #### Exemplo:
@@ -135,9 +132,9 @@ E para a requisição dos dados temos que colocar os mesmo tipos de dados coloca
     "username": "dododis",
     "password": "0987654+"
     }
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
-Informaçoes colocadas corretamente:
+Informações colocadas corretamente:
 ![img_11.png](img/img_11.png)
 - Responderá com as informações de ID, Nome completo, Email e Username, atualizados.
 
@@ -156,14 +153,14 @@ ID não encontrado:
 - Responderá com as informações com tipo de erro.
 
 ### 4. **GET /getUserID/{ID do usuário}**
-Este Endpoint procura o usuário pelo ID. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+Este Endpoint procura o usuário pelo ID. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocar no em Authorization com o tipo Bearer token:
 ![img_9.png](img/img_9.png)
-Na url deve estar o ID do usuario:
+Na url deve estar o ID do usuário:
 #### Exemplo:
-Com o ID do usuario 2:
+Com o ID do usuário 2:
 `http://localhost:8080/getUserID/2`
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
 ID existe:
 ![img_13.png](img/img_13.png)
@@ -183,14 +180,14 @@ ID não encontrado:
 
 
 ### 5. **GET /getUserEmail/{Email do usuário}**
-Este Endpoint procura o usuário pelo Email. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+Este Endpoint procura o usuário pelo Email. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocar no em Authorization com o tipo Bearer token:
 ![img_9.png](img/img_9.png)
-Na url deve estar o Email do usuario:
+Na url deve estar o Email do usuário:
 #### Exemplo:
 Com o email do usuario 2:
 `http://localhost:8080/getUserID/douglas@barbosa.com`
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
 Email existe:
 ![img_13.png](img/img_13.png)
@@ -205,34 +202,34 @@ ID não encontrado:
 ![img_15.png](img/img_15.png)
 - Responderá com as informações com tipo de erro.
 ### 6. **GET /getUserList**
-Este Endpoint lista os usuarios presentes no banco. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+Este Endpoint lista os usuários presentes no banco. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocar no em Authorization com o tipo Bearer token:
 ![img_9.png](img/img_9.png)
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
-Lista completa dos usuarios no Banco de Dados:
+Lista completa dos usuários no Banco de Dados:
 ![img_16.png](img/img_16.png)
 - Responderá com as informações de ID, Nome completo, Email e Username, de todos do Banco.
 
 Como resposta para casos de fracasso, retornará informações sobre o erro:
 #### Exemplo para `Status 404 Not Found`:
-Não tem usuparios no Banco de Dados:
+Não tem usuários no Banco de Dados:
 ![img_17.png](img/img_17.png)
 - Responderá com as informações com tipo de erro.
 
 ### 7. **DELETE /deleteUser/{ID do usuário}**
-Este Endpoint exclue o usuário pelo ID. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+Este Endpoint exclue o usuário pelo ID. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocar no em Authorization com o tipo Bearer token:
 ![img_9.png](img/img_9.png)
-Na url deve estar o ID do usuario:
+Na url deve estar o ID do usuário:
 #### Exemplo:
 Com o ID do usuario 2:
 `http://localhost:8080/deleteUser/2`
 
-Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de sucesso, retornará as seguintes informações:
 #### Exemplo para `Status 202 Accepted`:
 ID existente:
 ![img_18.png](img/img_18.png)
-- Responderá com a informaçao que o usario do ID foi excluido.
+- Responderá com a informação que o usuário do ID foi excluido.
 
 Como resposta para casos de fracasso, retornará informações sobre o erro:
 #### Exemplo para `Status 400 Bad Request`:
