@@ -3,7 +3,7 @@ package validation
 //Melhora a vualisação do erro, colocando as mesagens de erro nos campos criados no RestError, validando os erros
 
 import (
-	"Teste/src/configuration/rest_error"
+	"Teste/configuration/rest_error"
 	"encoding/json"
 	"errors"
 	"github.com/gin-gonic/gin/binding"
