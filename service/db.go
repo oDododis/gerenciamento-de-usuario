@@ -5,11 +5,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type dataBase struct {
+type DataBase struct {
 	db *gorm.DB
 }
 
-func (d *dataBase) StartConnection() error {
+func NewDB() *DataBase {
+	return &DataBase{}
+}
+
+func (d *DataBase) StartConnection() error {
 	db, err := gorm.Open(sqlite.Open("usersDataBase.db"), &gorm.Config{})
 	if err != nil {
 		return err
@@ -18,6 +22,6 @@ func (d *dataBase) StartConnection() error {
 	return nil
 }
 
-func (d *dataBase) GetConnection() *gorm.DB {
+func (d *DataBase) GetConnection() *gorm.DB {
 	return d.db
 }

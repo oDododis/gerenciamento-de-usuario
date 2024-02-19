@@ -3,13 +3,8 @@ package service
 import (
 	"Teste/configuration/rest_error"
 	"Teste/model"
-	"gorm.io/gorm"
 )
 
-type DataBase interface {
-	StartConnection() error
-	GetConnection() *gorm.DB
-}
 type UserServiceInterface interface {
 	CreateUserServices(userModel *model.User) *rest_error.RestError
 	DeleteUserServices(userID string) *rest_error.RestError

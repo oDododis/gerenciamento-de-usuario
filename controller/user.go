@@ -18,8 +18,8 @@ type UserController struct {
 	tokenServise service.TokenServiceInterface
 }
 
-func NewUserController(userServiceInterface service.UserServiceInterface, tokenServiceInterface service.UserServiceInterface) UserController {
-	return &UserController{
+func NewUserController(userServiceInterface service.UserServiceInterface, tokenServiceInterface service.TokenServiceInterface) UserController {
+	return UserController{
 		userService:  userServiceInterface,
 		tokenServise: tokenServiceInterface,
 	}

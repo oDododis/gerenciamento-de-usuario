@@ -11,9 +11,15 @@ import (
 func main() {
 
 	//Inicialização das dependencias de serviço e controle
-	services := service.NewUserService()
-	servicesToken := service.NewTokenService()
-	userController := controller.NewUserController(services, servicesToken)
+	dataBase := service.NewDB()
+	err := dataBase.StartConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	userServices := service.NewUserService(dataBase.GetConnection())
+	tokenServices := service.NewTokenService(dataBase.GetConnection())
+	
+	userController := controller.NewUserController(userServices, tokenServices)
 
 	//Iniciando as Rotas
 	router := gin.Default()
