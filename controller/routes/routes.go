@@ -3,7 +3,7 @@ package routes
 // Rotas da Aplicação
 
 import (
-	"Teste/src/controller"
+	"Teste/controller"
 	"github.com/gin-gonic/gin"
 )
 

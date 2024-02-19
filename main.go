@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Teste/src/controller"
-	"Teste/src/controller/routes"
-	"Teste/src/model/service"
+	"Teste/controller"
+	"Teste/controller/routes"
+	"Teste/service"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -11,9 +11,15 @@ import (
 func main() {
 
 	//Inicialização das dependencias de serviço e controle
-	services := service.NewUserDomainServece()
-	servicesToken := service.NewTokenDomainService()
-	userController := controller.NewUserControllerInterface(services, servicesToken)
+	dataBase := service.NewDB()
+	err := dataBase.StartConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	userServices := service.NewUserService(dataBase.GetConnection())
+	tokenServices := service.NewTokenService(dataBase.GetConnection())
+	
+	userController := controller.NewUserController(userServices, tokenServices)
 
 	//Iniciando as Rotas
 	router := gin.Default()
