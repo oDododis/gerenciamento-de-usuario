@@ -18,8 +18,8 @@ type UserController struct {
 	tokenServise service.TokenServiceInterface
 }
 
-func NewUserController(userServiceInterface service.UserServiceInterface, tokenServiceInterface service.TokenServiceInterface) UserController {
-	return UserController{
+func NewUserController(userServiceInterface service.UserServiceInterface, tokenServiceInterface service.TokenServiceInterface) *UserController {
+	return &UserController{
 		userService:  userServiceInterface,
 		tokenServise: tokenServiceInterface,
 	}
@@ -47,7 +47,6 @@ func (uc *UserController) CreateUser(c *gin.Context) {
 func (uc *UserController) DeleteUser(c *gin.Context) {
 	autenticationToken := c.Request.Header.Get("Authorization")
 	token := strings.Split(autenticationToken, " ")
-
 	if err := uc.tokenServise.TokenAutentication(token[1]); err != nil {
 		c.JSON(err.Code, err)
 		return
@@ -69,6 +68,7 @@ func (uc *UserController) FindUserID(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
+
 	userID := c.Param("userID")
 	userDomain, err := uc.userService.FindUserIDServices(userID)
 	if err != nil {
@@ -79,6 +79,13 @@ func (uc *UserController) FindUserID(c *gin.Context) {
 }
 
 func (uc *UserController) FindUserEmail(c *gin.Context) {
+	autenticationToken := c.Request.Header.Get("Authorization")
+	token := strings.Split(autenticationToken, " ")
+	if err := uc.tokenServise.TokenAutentication(token[1]); err != nil {
+		c.JSON(err.Code, err)
+		return
+	}
+
 	userEmail := c.Param("userEmail")
 	userDomain, err := uc.userService.FindUserEmailServices(userEmail)
 	if err != nil {
@@ -109,6 +116,12 @@ func (uc *UserController) Login(c *gin.Context) {
 }
 
 func (uc *UserController) UsersList(c *gin.Context) {
+	autenticationToken := c.Request.Header.Get("Authorization")
+	token := strings.Split(autenticationToken, " ")
+	if err := uc.tokenServise.TokenAutentication(token[1]); err != nil {
+		c.JSON(err.Code, err)
+		return
+	}
 
 	userID, err := uc.userService.HowMuchUsers()
 	if err != nil {
@@ -116,13 +129,13 @@ func (uc *UserController) UsersList(c *gin.Context) {
 		return
 	}
 	for i := 1; i <= userID; i++ {
-		userDomain, err := uc.userService.FindUserIDServices(strconv.Itoa(i))
+		userModel, err := uc.userService.ListUserIDServices(strconv.Itoa(i))
+
+		c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+		c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(userModel))
 		if err != nil {
 			c.JSON(err.Code, err)
-			return
 		}
-		c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-		c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(userDomain))
 	}
 	c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
 }
@@ -146,11 +159,14 @@ func (uc *UserController) UpdateUser(c *gin.Context) {
 	user.Password = encryptPassword(userRequest.Password)
 
 	userID := c.Param("userID")
+	userid, _ := strconv.Atoi(userID)
+	user.ID = uint(userid)
 
 	if err := uc.userService.UpdateUserServices(userID, user); err != nil {
 		c.JSON(err.Code, err)
 		return
 	}
+
 	c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(user))
 }
 

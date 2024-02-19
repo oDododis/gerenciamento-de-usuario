@@ -38,7 +38,7 @@ func ValidateUserError(validationErr error) *rest_error.RestError {
 	var jsonValidationError validator.ValidationErrors
 
 	if errors.As(validationErr, &jsonErr) {
-		return rest_error.NewBadRequestError("Tipo de campo invalido")
+		return rest_error.NewBadRequestError("Invalid field type.")
 	} else if errors.As(validationErr, &jsonValidationError) {
 		var errorsCauses []rest_error.Causes
 
@@ -51,8 +51,8 @@ func ValidateUserError(validationErr error) *rest_error.RestError {
 			errorsCauses = append(errorsCauses, cause)
 		}
 
-		return rest_error.NewBadRequestValidationError("Campo enviado invalido", errorsCauses)
+		return rest_error.NewBadRequestValidationError("Invalid field sent.", errorsCauses)
 	} else {
-		return rest_error.NewBadRequestError("Erro tentando converter um campo")
+		return rest_error.NewBadRequestError("Error trying to convert a field.")
 	}
 }
