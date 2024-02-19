@@ -126,7 +126,7 @@ func (uc *UserController) Login(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusAccepted, "TokenServiceInterface: "+userDomain)
+	c.JSON(http.StatusAccepted, "Token: "+userDomain)
 }
 
 // Cria uma lista dos usuários existentes no banco de dados

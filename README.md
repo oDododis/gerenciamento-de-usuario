@@ -3,7 +3,7 @@
 
 ## Item necessario para rodar-lo:
 - A linguagem utilizada é: [Go](https://golang.org/dl/)
-- Para enviar as requisições: [Postman](https://www.postman.com/downloads/ )
+- Para enviar as requisições localmente: [Postman Desktop](https://www.postman.com/downloads/ )
 
 ## Instalação:
 Para instalar é apenas clonar neste repositório:
@@ -18,7 +18,7 @@ Antes de iniciar o programa precisamos criar as tablas do banco vazias, com este
 go run migration/main.go
 ````
 
-Para iniciar o gerenciador execute este commando:
+Para iniciar o gerenciador execute este comando:
 ````
 go run main.go
 ````
@@ -43,7 +43,7 @@ Temos as seguintes Endpoints no servidor:
  No Postman a requisição dos dados devem ser feita no Body e raw na formatação JSON:
  ![img.png](img.png)
    
- #### Exemplo:
+ #### Exemplos:
  Usuáro 1:
 
         {
@@ -61,13 +61,15 @@ Temos as seguintes Endpoints no servidor:
         "password": "2222@@@@"
         }
 
- Como resposta para casos de susseso, retornará as seguintes informações:
+Como resposta para casos de susseso, retornará as seguintes informações:
 #### Exemplo para `Status 201 Created`:
 
-   Informaçoes colocadas corretamente:
-   ![img_1.png](img_1.png)
+Informaçoes colocadas corretamente:
+![img_1.png](img_1.png)
 
-   Como resposta para casos de fracasso, retornará informações sobre o erro:
+- Responderá com as informações de ID, Nome completo, Email e Username.
+
+Como resposta para casos de fracasso, retornará informações sobre o erro:
 
 #### Exemplos para `Status 400 Bad Request`: 
    
@@ -77,20 +79,53 @@ O nome completo não segue as restrioções mínimas:
 O email já existe no Banco de Dados:
 ![img_3.png](img_3.png)
 
+- Responderá com as informações de com tipo de erro.
+
 ### 2. **POST /login**
-   - Este Endpoint faz o login do usuário.
+Este Endpoint faz o login do usuário. Para fazer o login presiramos ter as informações parecida com a do Create User, com os serguintes requisitos:
+   - Email, com o formato de email.
+   - Senha, com um mínimo de 8 caracteres e precisa conter algum dos seguites caracteres especiais: "!", "@", "#", "$", "%", "&", "*", "(", ")", "_" e "+".
+
+O email e a senha devem ser o mesmo de algum usuario ques esteje no banco de dados e a requisição deve ser feita a mesma maneira do Create User, no Body, raw e em formatação JSON:
+![img_4.png](img_4.png)
+#### Exemplo:
+        {
+        "email": "douglas@barbosa.com",
+        "password": "1234567*"
+        }
+Como resposta para casos de susseso, retornará as seguintes informações:
+
+#### Exemplo para `Status 202 Accepted`:
+Informaçoes colocadas corretamente:
+![img_5.png](img_5.png)
+
+- Responderá com as informação do Token que sera utilizado para as requisições restantes.
+
+Como resposta para casos de fracasso, retornará informações sobre o erro:
+#### Exemplo para `Status 400 Bad Request`:
+Email invalido:
+![img_6.png](img_6.png)
+
+#### Exemplo para `Status 403 Forbidden`:
+Senha incorreta:
+![img_7.png](img_7.png)
+
+#### Exemplo para `Status 404 Not Found`:
+Email não existe no Banco de Dados
+![img_8.png](img_8.png)
+
+- Responderá com as informações de com tipo de erro.
 
 3. **PUT /updateUser/{ID do usuário}**
-   - asd
+
 
 4. **GET /getUserID/{ID do usuário}**
-   - asd
+
 
 5. **GET /getUserEmail/{Email do usuário}**
-   - asd
+
 
 6. **GET /getUserList**
-   - asd
+
 
 7. **DELETE /deleteUser/{ID do usuário}**
-   - asd
