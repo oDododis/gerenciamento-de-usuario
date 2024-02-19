@@ -117,6 +117,8 @@ Email não existe no Banco de Dados
 - Responderá com as informações de com tipo de erro.
 
 3. **PUT /updateUser/{ID do usuário}**
+Este Endpoint atualiza o usuário. Para este Endpoint funcionar precisamos do Token criado no login. No postman devemos colocano em Authorization com o tipo Bearer token:
+![img_9.png](img_9.png)
 
 
 4. **GET /getUserID/{ID do usuário}**
