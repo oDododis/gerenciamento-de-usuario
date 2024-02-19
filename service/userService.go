@@ -5,16 +5,23 @@ import (
 	"Teste/model"
 	"errors"
 	"gorm.io/gorm"
+	"net/http"
 	"strconv"
 )
+
+// Estrutura do serviço de usuário
 
 type UserService struct {
 	db *gorm.DB
 }
 
+// Cria um novo serviço de usuário
+
 func NewUserService(db *gorm.DB) *UserService {
 	return &UserService{db: db}
 }
+
+//Cria o usuario no Banco de Dados com os dados recebidos do controle
 
 func (ud *UserService) CreateUserServices(userModel *model.User) *rest_error.RestError {
 	var lastUserModel *model.User
@@ -29,11 +36,14 @@ func (ud *UserService) CreateUserServices(userModel *model.User) *rest_error.Res
 		return rest_error.NewBadRequestError("Existing username.")
 	}
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		return rest_error.NewRestError(err.Error(), err.Error(), 505, nil)
+		return rest_error.NewRestError(err.Error(), err.Error(), http.StatusInternalServerError, nil)
 	}
 	ud.db.Create(&userModel)
 	return nil
 }
+
+//Atualiza o DeletedAt do usuario no Banco de Dados com o ID recebido do controle
+//Não deteta totalmente o usuário no Banco
 
 func (ud *UserService) DeleteUserServices(userID string) *rest_error.RestError {
 	userid, _ := strconv.Atoi(userID)
@@ -48,6 +58,8 @@ func (ud *UserService) DeleteUserServices(userID string) *rest_error.RestError {
 	}
 	return nil
 }
+
+//Procura o usuario com o ID recebido do controle
 
 func (ud *UserService) FindUserIDServices(userID string) (*model.User, *rest_error.RestError) {
 
@@ -64,6 +76,8 @@ func (ud *UserService) FindUserIDServices(userID string) (*model.User, *rest_err
 	return userModel, nil
 }
 
+//Procura o usuario com o email recebido do controle
+
 func (ud *UserService) FindUserEmailServices(userEmail string) (*model.User, *rest_error.RestError) {
 	userModel := &model.User{
 		Email: userEmail,
@@ -79,6 +93,8 @@ func (ud *UserService) FindUserEmailServices(userEmail string) (*model.User, *re
 	}
 }
 
+//Procura o ultimo usuario e retorna seu ID
+
 func (ud *UserService) HowMuchUsers() (int, *rest_error.RestError) {
 	userModel := &model.User{}
 
@@ -88,6 +104,8 @@ func (ud *UserService) HowMuchUsers() (int, *rest_error.RestError) {
 	}
 	return int(userModel.ID), nil
 }
+
+//Lista os usuários mesmos tendo ID "excluídos"
 
 func (ud *UserService) ListUserIDServices(userID string) (*model.User, *rest_error.RestError) {
 
@@ -106,6 +124,8 @@ func (ud *UserService) ListUserIDServices(userID string) (*model.User, *rest_err
 		return userModel, nil
 	}
 }
+
+//Atualiza o usuário com os dados recebidos do controle
 
 func (ud *UserService) UpdateUserServices(userID string, userModel *model.User) *rest_error.RestError {
 
@@ -126,7 +146,7 @@ func (ud *UserService) UpdateUserServices(userID string, userModel *model.User) 
 	}
 
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		return rest_error.NewRestError(err.Error(), err.Error(), 505, nil)
+		return rest_error.NewRestError(err.Error(), err.Error(), http.StatusInternalServerError, nil)
 	}
 	ud.db.Model(&lastUserModel).Updates(&userModel)
 

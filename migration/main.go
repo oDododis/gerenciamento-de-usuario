@@ -7,6 +7,8 @@ import (
 	"log"
 )
 
+// Crias as tabelas do Banco vazias
+
 func main() {
 	db, err := gorm.Open(sqlite.Open("usersDataBase.db"), &gorm.Config{})
 	if err != nil {

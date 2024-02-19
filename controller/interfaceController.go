@@ -2,6 +2,8 @@ package controller
 
 import "github.com/gin-gonic/gin"
 
+//Cria as interfaces de comunicação entre as rotas e os controles
+
 type UserControllerInterface interface {
 	CreateUser(c *gin.Context)
 	DeleteUser(c *gin.Context)

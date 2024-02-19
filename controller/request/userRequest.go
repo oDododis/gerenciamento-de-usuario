@@ -11,6 +11,8 @@ type UserRequest struct {
 	Password string `json:"password" binding:"required,min=8,containsany=!@#$%&*()_+"`
 }
 
+// Converte o Request para Model
+
 func (userRequest *UserRequest) ConvertRequestToModel() *model.User {
 	user := &model.User{
 		FullName: userRequest.FullName,

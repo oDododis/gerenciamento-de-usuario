@@ -1,6 +1,6 @@
 package response
 
-// Responde o User sem a senha
+// Responde o Usuario sem a senha
 
 type UserResponse struct {
 	ID       uint   `json:"id"` // não sei se é necessario

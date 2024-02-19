@@ -31,7 +31,7 @@ func init() {
 	}
 }
 
-// Coloca os error validados nos campos corretos em RestError
+// Coloca os error validados nos campos corretos em RestError/Causes
 
 func ValidateUserError(validationErr error) *rest_error.RestError {
 	var jsonErr *json.UnmarshalTypeError

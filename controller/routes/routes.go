@@ -1,7 +1,5 @@
 package routes
 
-// Rotas da Aplicação
-
 import (
 	"Teste/controller"
 	"github.com/gin-gonic/gin"

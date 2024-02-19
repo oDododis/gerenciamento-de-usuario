@@ -10,15 +10,13 @@ import (
 
 func main() {
 
-	//Inicialização das dependencias de serviço e controle
+	//Inicialização das dependencias de serviço, controle e banco de dados
 	dataBase := service.NewDB()
-	err := dataBase.StartConnection()
-	if err != nil {
+	if err := dataBase.StartConnection(); err != nil {
 		log.Fatal(err)
 	}
 	userServices := service.NewUserService(dataBase.GetConnection())
 	tokenServices := service.NewTokenService(dataBase.GetConnection())
-	
 	userController := controller.NewUserController(userServices, tokenServices)
 
 	//Iniciando as Rotas

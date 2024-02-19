@@ -7,13 +7,19 @@ import (
 	"gorm.io/gorm"
 )
 
+// Estrutura do serviço de token
+
 type TokenService struct {
 	db *gorm.DB
 }
 
+// Cria um novo serviço de token
+
 func NewTokenService(db *gorm.DB) *TokenService {
 	return &TokenService{db: db}
 }
+
+//Faz o login do usuário
 
 func (ud *TokenService) LoginServices(userModel *model.User) (string, *rest_error.RestError) {
 	token := uuid.New().String()
@@ -37,6 +43,8 @@ func (ud *TokenService) LoginServices(userModel *model.User) (string, *rest_erro
 		return autentication.Token, nil
 	}
 }
+
+// Faz a autenticação do token enviado
 
 func (ud *TokenService) TokenAutentication(autenticationToken string) *rest_error.RestError {
 

@@ -5,6 +5,8 @@ import (
 	"Teste/model"
 )
 
+//Cria as interfaces de comunicação entre as serviços e o banco de dados
+
 type UserServiceInterface interface {
 	CreateUserServices(userModel *model.User) *rest_error.RestError
 	DeleteUserServices(userID string) *rest_error.RestError

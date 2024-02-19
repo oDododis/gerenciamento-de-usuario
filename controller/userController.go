@@ -13,10 +13,14 @@ import (
 	"strings"
 )
 
+// Estrutura do Controle
+
 type UserController struct {
 	userService  service.UserServiceInterface
 	tokenServise service.TokenServiceInterface
 }
+
+// Cria um novo controle
 
 func NewUserController(userServiceInterface service.UserServiceInterface, tokenServiceInterface service.TokenServiceInterface) *UserController {
 	return &UserController{
@@ -24,6 +28,8 @@ func NewUserController(userServiceInterface service.UserServiceInterface, tokenS
 		tokenServise: tokenServiceInterface,
 	}
 }
+
+//Cria o usuário
 
 func (uc *UserController) CreateUser(c *gin.Context) {
 	var userRequest request.UserRequest
@@ -41,8 +47,10 @@ func (uc *UserController) CreateUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusCreated, response.ConvertDomainToResponse(user))
+	c.JSON(http.StatusCreated, response.ConvertModelToResponse(user))
 }
+
+//Exclui o usuário
 
 func (uc *UserController) DeleteUser(c *gin.Context) {
 	autenticationToken := c.Request.Header.Get("Authorization")
@@ -60,6 +68,8 @@ func (uc *UserController) DeleteUser(c *gin.Context) {
 	c.JSON(http.StatusAccepted, "UserServiceInterface "+userID+" excluido")
 }
 
+//Procura o usuário por ID
+
 func (uc *UserController) FindUserID(c *gin.Context) {
 	autenticationToken := c.Request.Header.Get("Authorization")
 	token := strings.Split(autenticationToken, " ")
@@ -75,8 +85,10 @@ func (uc *UserController) FindUserID(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(userDomain))
+	c.JSON(http.StatusAccepted, response.ConvertModelToResponse(userDomain))
 }
+
+// Procura o usuário por Email
 
 func (uc *UserController) FindUserEmail(c *gin.Context) {
 	autenticationToken := c.Request.Header.Get("Authorization")
@@ -92,8 +104,10 @@ func (uc *UserController) FindUserEmail(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(userDomain))
+	c.JSON(http.StatusAccepted, response.ConvertModelToResponse(userDomain))
 }
+
+// Faz o login do usuário e retorna um token
 
 func (uc *UserController) Login(c *gin.Context) {
 	var userRequest request.LoginRequest
@@ -115,6 +129,8 @@ func (uc *UserController) Login(c *gin.Context) {
 	c.JSON(http.StatusAccepted, "TokenServiceInterface: "+userDomain)
 }
 
+// Cria uma lista dos usuários existentes no banco de dados
+
 func (uc *UserController) UsersList(c *gin.Context) {
 	autenticationToken := c.Request.Header.Get("Authorization")
 	token := strings.Split(autenticationToken, " ")
@@ -132,13 +148,15 @@ func (uc *UserController) UsersList(c *gin.Context) {
 		userModel, err := uc.userService.ListUserIDServices(strconv.Itoa(i))
 
 		c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-		c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(userModel))
+		c.JSON(http.StatusAccepted, response.ConvertModelToResponse(userModel))
 		if err != nil {
 			c.JSON(err.Code, err)
 		}
 	}
 	c.JSON(http.StatusAccepted, "=-=-=-=-=-=-=-=-=-=-=-=-=-=")
 }
+
+// Atualiza as informações do usuário
 
 func (uc *UserController) UpdateUser(c *gin.Context) {
 	var userRequest request.UserRequest
@@ -167,8 +185,10 @@ func (uc *UserController) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusAccepted, response.ConvertDomainToResponse(user))
+	c.JSON(http.StatusAccepted, response.ConvertModelToResponse(user))
 }
+
+// criptografa a senha do usuário usando md5
 
 func encryptPassword(password string) string {
 	hash := md5.New()
