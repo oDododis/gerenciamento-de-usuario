@@ -65,7 +65,7 @@ func (uc *UserController) DeleteUser(c *gin.Context) {
 		c.JSON(err.Code, err)
 		return
 	}
-	c.JSON(http.StatusAccepted, "UserServiceInterface "+userID+" excluido")
+	c.JSON(http.StatusAccepted, "User "+userID+" was deleted.")
 }
 
 //Procura o usuário por ID

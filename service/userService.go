@@ -65,7 +65,7 @@ func (ud *UserService) FindUserIDServices(userID string) (*model.User, *rest_err
 
 	userid, _ := strconv.Atoi(userID)
 	if userid <= 0 {
-		return nil, rest_error.NewNotFoundError("Invalid ID (less than or equal to 0).")
+		return nil, rest_error.NewBadRequestError("Invalid ID (less than or equal to 0).")
 	}
 	userModel := &model.User{}
 
@@ -83,7 +83,7 @@ func (ud *UserService) FindUserEmailServices(userEmail string) (*model.User, *re
 		Email: userEmail,
 	}
 	if userEmail == "" {
-		return nil, rest_error.NewNotFoundError("Empty email.")
+		return nil, rest_error.NewBadRequestError("Empty email.")
 	} else {
 		err := ud.db.First(&userModel, "email = ?", userEmail).Error
 		if err != nil {
